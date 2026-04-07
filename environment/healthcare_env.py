@@ -31,7 +31,7 @@ class HealthcareEnvironment:
     
     def _load_patient_corpus(self) -> list:
         """Load patient queries from JSON or define inline"""
-        # TODO: Ritu - Add 10-12 patient cases
+        # TODO: Ritu - Add 10-12 patient cases which is ourSampleData in JSON format
         return [
             {
                 "id": 1,

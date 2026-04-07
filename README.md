@@ -94,6 +94,57 @@ metaHFpytorch_openEnvHackathon/
 ```
 
 
+## 8. RL Architecture & Algorithm
 
-## 8. References
+### 8.1 Agent-Environment Loop
+
+The system implements a standard Reinforcement Learning loop:
+
+1. **Observe** – Environment sends patient query + context to agent  
+2. **Act** – Agent chooses ESCALATE or ANSWER  
+3. **Reward** – Environment returns hierarchical reward (safety + quality + efficiency)  
+4. **Learn** – Agent updates policy using PPO  
+5. **Repeat** – Until episode ends (max 5 steps or emergency detected)  
+
+### 8.2 Algorithm: Proximal Policy Optimization (PPO)
+
+| Property            | Value                                                         |
+|---------------------|---------------------------------------------------------------|
+| **Type**            | Actor-Critic                                                  |
+| **Why chosen**      | Stable updates, sample efficient, handles continuous/discrete actions |
+| **Alternatives rejected** | Q-Learning (unstable for long horizons), REINFORCE (high variance) |
+
+**PPO Clipping Mechanism:**
+
+\[
+L(\theta) = \min\big(r(\theta) A, \ \text{clip}(r(\theta), 1-\epsilon, 1+\epsilon) A \big)
+\]
+
+where \( r(\theta) \) = probability ratio between new and old policy, \( A \) = advantage estimate.
+
+### 8.3 Policy Network Architecture
+
+Input (512-dim embedding)  
+↓  
+Dense(256) + ReLU  
+↓  
+Dense(256) + ReLU  
+↓  
+Dense(2) + SoftMax  
+↓  
+Output: [P(ESCALATE), P(ANSWER)]  
+
+### 8.4 Training Configuration
+
+| Parameter           | Value  |
+|---------------------|--------|
+| Learning rate       | 3e-4   |
+| Discount factor (γ) | 0.99   |
+| GAE λ               | 0.95   |
+| PPO clip range (ε)  | 0.2    |
+| Epochs per update   | 4      |
+| Batch size          | 64     |
+
+
+## 9. References
 (3-5 citations)
