@@ -1,46 +1,64 @@
 # RL-Powered Automated Healthcare Assistant
 
 ## Abstract
-(2-3 paragraphs: problem, approach, environment design, key results)
+(Write 150 words: problem, approach, MDP formulation, key reward components)
 
 ## 1. Introduction
-- Healthcare triage problem
-- Why RL + OpenEnv
-- Comparison to existing systems (with citations)
+- Healthcare triage gap
+- Why RL over rule-based systems
+- OpenEnv as framework
 
 ## 2. Environment Design
-### 2.1 MDP Formulation (Table)
-### 2.2 Patient Query Corpus (Table of test cases)
-### 2.3 Observation Space
-### 2.4 Action Space
+### 2.1 MDP Formulation
+| Component | Definition |
+|-----------|------------|
+| State | Current patient query + history |
+| Observation | {query_text, patient_context, step_count} |
+| Action | {decision: ESCALATE or ANSWER, response: str} |
+| Reward | Hierarchical (safety + quality) |
+| Horizon | 5 steps per episode |
+| Terminal | Emergency detected OR max steps reached |
 
-## 3. Tasks (3 Difficulty Levels)
+### 2.2 Patient Query Corpus
+(Table of 10-12 test cases: symptoms, ground truth escalation needed, expected action)
+
+## 3. Tasks
 ### Task 1 — Emergency Detection (Easy)
-### Task 2 — Triage Classification (Medium)  
+- Action: binary (ESCALATE or ANSWER)
+- Reward: +10 correct escalate, -20 missed emergency
+
+### Task 2 — Severity Classification (Medium)
+- Action: mild / moderate / severe / emergency
+- Partial credit for adjacent levels
+
 ### Task 3 — Full Response Generation (Hard)
+- Action: ESCALATE or ANSWER with LLM response
+- Multi-component reward
 
 ## 4. Reward Function
-(Equation with weighted components)
+R = w1 × Safety + w2 × Quality + w3 × Efficiency
+
+Safety = +10 if correct escalate, -20 if missed emergency
+Quality = LLM-as-judge score (0-5)
+Efficiency = -0.1 per step
 
 ## 5. Server API
-(Endpoint table: /health, /reset, /step, /state, /grader)
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| /health | GET | Liveness check |
+| /reset | POST | Start new episode |
+| /step | POST | Submit action |
+| /state | GET | Current environment state |
 
-## 6. Baseline Evaluation
-(Benchmark table with GPT-4o-mini or Gemini scores)
+## 6. Setup and Deployment
+### Local Installation
+(commands)
 
-## 7. Setup and Deployment
-### 7.1 Local Installation
-### 7.2 Docker Deployment
-### 7.3 Hugging Face Spaces
+### Docker Deployment
+(commands)
 
-## 8. Example Interaction
-(curl commands)
-
-## 9. Project Structure
+## 7. Project Structure
 (tree with file purposes)
 
-## 10. Dependencies
-(table)
-
-## 11. References
-(citations: medical triage literature + OpenEnv docs)
+## 8. References
+(3-5 citations)
