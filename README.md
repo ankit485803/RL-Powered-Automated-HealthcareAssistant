@@ -57,8 +57,43 @@ Efficiency = -0.1 per step
 ### Docker Deployment
 (commands)
 
-## 7. Project Structure
-(tree with file purposes)
+## 7. Project Structure  
+*(Tree with file purposes)*
+
+```text
+metaHFpytorch_openEnvHackathon/
+│
+├── environment/
+│   ├── __init__.py           # Module exports
+│   ├── healthcare_env.py     # OpenEnv core: reset(), step(), get_state()
+│   └── reward.py             # Hierarchical reward calculation
+│
+├── agent/
+│   ├── __init__.py           # Module exports
+│   ├── rl_agent.py           # PPO/GRPO policy network
+│   └── train.py              # Training loop
+│
+├── llm/
+│   ├── __init__.py           # Module exports
+│   └── gemini_handler.py     # Gemini API wrapper
+│
+├── tests/
+│   └── test_reward.py        # Unit tests for reward function
+│
+├── docker/
+│   └── Dockerfile            # Container definition
+│
+├── docs/
+│   └── dataFlow.txt          # Data flow diagram
+│
+├── server.py                 # FastAPI endpoints
+├── requirements.txt          # Dependencies
+├── .gitignore                # Exclusions
+└── README.md                 # Documentation
+
+```
+
+
 
 ## 8. References
 (3-5 citations)
