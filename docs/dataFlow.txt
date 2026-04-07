@@ -1,0 +1,87 @@
+====================================================================
+DATA FLOW DIAGRAM - RL-Powered Automated Healthcare Assistant
+Team Vector | Meta PyTorch OpenEnv Hackathon
+====================================================================
+
+[STEP 1] USER INPUT
+-------------------------------------------
+Patient submits query: "I have chest pain and difficulty breathing"
+                    │
+                    ▼
+
+[STEP 2] OPENENV ENVIRONMENT (reset)
+-------------------------------------------
+Environment loads query + patient context
+Returns OBSERVATION to Agent
+                    │
+                    ▼
+
+[STEP 3] RL AGENT DECISION
+-------------------------------------------
+Agent processes observation
+Chooses ACTION:
+  - ESCALATE (send to doctor)
+  - ANSWER (generate response via LLM)
+                    │
+                    ▼
+
+[STEP 4] ACTION EXECUTION
+-------------------------------------------
+IF ESCALATE:
+    → Trigger alert system
+    → Reward: +10 if correct emergency, -5 if false alarm
+
+IF ANSWER:
+    → Send query to Gemini LLM
+    → LLM generates response with medical system prompt
+    → Response returned to user
+                    │
+                    ▼
+
+[STEP 5] REWARD CALCULATION (Ritu's domain)
+-------------------------------------------
+Reward = Base_Reward + Quality_Bonus - Penalties
+
+Base_Reward:
+  +10 → Correct escalation
+  -20 → Missed emergency (ANSWER when should ESCALATE)
+  -5  → False alarm (ESCALATE when not needed)
+
+Quality_Bonus (0 to +5):
+  - Relevance to query
+  - Medical accuracy
+  - Safety compliance
+
+Penalties:
+  -0.1 per second of delay
+  -2 for unsafe content
+                    │
+                    ▼
+
+[STEP 6] LEARNING LOOP
+-------------------------------------------
+Agent receives reward
+Agent updates policy (PPO/GRPO)
+Environment moves to next state (if multiple turns)
+Repeat until episode ends (done = True)
+
+====================================================================
+SIMPLE FLOW (One Line Each)
+====================================================================
+
+Query → Environment → Agent → Decision → Execute → Reward → Learn
+
+====================================================================
+KEY FILES RESPONSIBILITY
+====================================================================
+
+File                              | Owner        | Purpose
+----------------------------------|--------------|----------------------------
+environment/healthcare_env.py     | Shubham      | reset(), step()
+agent/rl_agent.py                 | Ankit        | PPO/GRPO decision
+llm/gemini_handler.py             | Shubham      | Gemini API calls
+environment/reward.py             | Ritu         | Reward calculation
+tests/test_reward.py              | Ritu         | Validate domain logic
+docker/Dockerfile                 | Ankit        | OpenEnv container
+
+====================================================================
