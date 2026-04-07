@@ -16,9 +16,9 @@ Returns OBSERVATION to Agent
                     │
                     ▼
 
-[STEP 3] RL AGENT DECISION
+[STEP 3] RL AGENT DECISION (Ankit)
 -------------------------------------------
-Agent processes observation
+Agent processes observation via Policy Network
 Chooses ACTION:
   - ESCALATE (send to doctor)
   - ANSWER (generate response via LLM)
@@ -32,13 +32,13 @@ IF ESCALATE:
     → Reward: +10 if correct emergency, -5 if false alarm
 
 IF ANSWER:
-    → Send query to Gemini LLM
+    → Send query to Gemini LLM (Shubham)
     → LLM generates response with medical system prompt
     → Response returned to user
                     │
                     ▼
 
-[STEP 5] REWARD CALCULATION (Ritu's domain)
+[STEP 5] REWARD CALCULATION (Ritu)
 -------------------------------------------
 Reward = Base_Reward + Quality_Bonus - Penalties
 
@@ -62,26 +62,24 @@ Penalties:
 -------------------------------------------
 Agent receives reward
 Agent updates policy (PPO/GRPO)
-Environment moves to next state (if multiple turns)
+Environment moves to next state
 Repeat until episode ends (done = True)
 
 ====================================================================
-SIMPLE FLOW (One Line Each)
+FILE RESPONSIBILITY MATRIX
 ====================================================================
 
-Query → Environment → Agent → Decision → Execute → Reward → Learn
-
-====================================================================
-KEY FILES RESPONSIBILITY
-====================================================================
-
-File                              | Owner        | Purpose
-----------------------------------|--------------|----------------------------
-environment/healthcare_env.py     | Shubham      | reset(), step()
-agent/rl_agent.py                 | Ankit        | PPO/GRPO decision
-llm/gemini_handler.py             | Shubham      | Gemini API calls
-environment/reward.py             | Ritu         | Reward calculation
-tests/test_reward.py              | Ritu         | Validate domain logic
-docker/Dockerfile                 | Ankit        | OpenEnv container
+File                                   | Owner        | Status
+---------------------------------------|--------------|--------
+environment/healthcare_env.py          | Shubham      | Skeleton
+environment/reward.py                  | Ritu         | Complete
+agent/rl_agent.py                      | Ankit        | Skeleton
+agent/train.py                         | Ankit        | Skeleton
+llm/gemini_handler.py                  | Shubham      | Skeleton
+tests/test_reward.py                   | Ritu         | Complete
+docker/Dockerfile                      | Ankit        | Complete
+server.py                              | Shubham/Ankit| Skeleton
+requirements.txt                       | Team         | Complete
+.gitignore                             | Team         | Complete
 
 ====================================================================
