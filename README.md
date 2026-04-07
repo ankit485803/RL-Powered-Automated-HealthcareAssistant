@@ -1,30 +1,46 @@
+# RL-Powered Automated Healthcare Assistant
 
-# 🏥 RL-Powered Automated Healthcare Assistant
+## Abstract
+(2-3 paragraphs: problem, approach, environment design, key results)
 
-### Team Vector | Meta PyTorch OpenEnv Hackathon 2026
+## 1. Introduction
+- Healthcare triage problem
+- Why RL + OpenEnv
+- Comparison to existing systems (with citations)
 
----
+## 2. Environment Design
+### 2.1 MDP Formulation (Table)
+### 2.2 Patient Query Corpus (Table of test cases)
+### 2.3 Observation Space
+### 2.4 Action Space
 
-## 📌 Overview
+## 3. Tasks (3 Difficulty Levels)
+### Task 1 — Emergency Detection (Easy)
+### Task 2 — Triage Classification (Medium)  
+### Task 3 — Full Response Generation (Hard)
 
-An **OpenEnv-compatible Reinforcement Learning environment** where an AI agent learns optimal clinical triage decisions — choosing between **ESCALATE** (alert healthcare professional) or **ANSWER** (generate LLM response) for patient queries.
+## 4. Reward Function
+(Equation with weighted components)
 
-The agent learns through delayed rewards, balancing:
-- ✅ **Patient Safety** (never miss emergencies)
-- ✅ **Resource Efficiency** (avoid false alarms)
-- ✅ **Response Quality** (accurate, helpful answers)
+## 5. Server API
+(Endpoint table: /health, /reset, /step, /state, /grader)
 
----
+## 6. Baseline Evaluation
+(Benchmark table with GPT-4o-mini or Gemini scores)
 
-## 🎯 Problem Statement
+## 7. Setup and Deployment
+### 7.1 Local Installation
+### 7.2 Docker Deployment
+### 7.3 Hugging Face Spaces
 
-| Challenge | Our Solution |
-|-----------|--------------|
-| Medical queries need triage | RL agent learns escalation policy |
-| LLMs can miss emergencies | Hierarchical reward structure penalizes missed emergencies severely (-20) |
-| False alarms waste resources | False alarm penalty (-5) |
-| Response quality matters | LLM-as-judge evaluates answer quality (0-5) |
+## 8. Example Interaction
+(curl commands)
 
----
+## 9. Project Structure
+(tree with file purposes)
 
-## 🏗️ Architecture
+## 10. Dependencies
+(table)
+
+## 11. References
+(citations: medical triage literature + OpenEnv docs)
