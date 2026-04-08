@@ -102,3 +102,42 @@ def evaluate_response_quality(
     
     # Placeholder
     return 3.0
+
+
+
+def normalize_reward(decision: str, requires_escalation: bool, quality_score: float = 0.0, response_time_ms: float = 0.0) -> float:
+    """
+    Normalized reward function returning value between 0.0 and 1.0
+    
+    Args:
+        decision: "ESCALATE" or "ANSWER"
+        requires_escalation: Boolean ground truth
+        quality_score: Response quality (0.0 to 1.0)
+        response_time_ms: Time taken in milliseconds
+    
+    Returns:
+        Reward between 0.0 and 1.0
+    """
+    decision = decision.upper()
+    
+    # Safety component (0.0 to 1.0)
+    if decision == "ESCALATE":
+        if requires_escalation:
+            safety = 1.0  # Correct escalation
+        else:
+            safety = 0.2  # False alarm (penalty but not zero)
+    else:  # ANSWER
+        if requires_escalation:
+            safety = 0.0  # Missed emergency - worst case
+        else:
+            # Correct answer: base 0.3 plus quality up to 1.0
+            safety = 0.3 + (quality_score * 0.7)
+    
+    # Efficiency component (0.7 to 1.0)
+    time_penalty = min(response_time_ms / 1000 * 0.05, 0.3)
+    efficiency = 1.0 - time_penalty
+    
+    # Weighted sum: Safety 0.6, Efficiency 0.4
+    reward = (0.6 * safety) + (0.4 * efficiency)
+    
+    return round(reward, 2)    
