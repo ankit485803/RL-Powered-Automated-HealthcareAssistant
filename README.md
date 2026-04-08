@@ -143,31 +143,35 @@ metaHFpytorch_openEnvHackathon/
 │
 ├── environment/
 │   ├── __init__.py           # Module exports
-│   ├── healthcare_env.py     # OpenEnv core: reset(), step(), get_state()
+│   ├── healthcare_env.py     # RL environment (reset, step, state)
 │   └── reward.py             # Hierarchical reward calculation
 │
 ├── agent/
 │   ├── __init__.py           # Module exports
-│   ├── rl_agent.py           # PPO/GRPO policy network
+│   ├── rl_agent.py           # PPO/GRPO policy network (RL policy implementation)
 │   └── train.py              # Training loop
 │
 ├── llm/
 │   ├── __init__.py           # Module exports
-│   └── gemini_handler.py     # Gemini API wrapper
+│   └── openai_handler.py     # openai API wrapper (LLM)
 │
 ├── tests/
-│   └── test_reward.py        # Unit tests for reward function
+│   └── test_reward.py        # Unit validation tests for reward function  
 │
-├── docker/
-│   └── Dockerfile            # Container definition
+├── server/
+│   └── __init__.py           # Module exports
+│   └── app.py                # FastAPI endpoints
 │
 ├── docs/
-│   └── dataFlow.txt          # Data flow diagram
+│   └── dataFlow.txt          # Data flow diagram (description)
 │
-├── server.py                 # FastAPI endpoints
+├── models.py                 # Type-safe contracts (Action, Observation, State)
 ├── requirements.txt          # Dependencies
+├── client.py                 # Input client
 ├── inference.py              # prediction logic file  
 ├── openenv.py                # env setup 
+├── Dockerfile                # Container definition
+├── .env                      # Environment variables 
 ├── .gitignore                # Exclusions ignored files  
 └── README.md                 # Documentation
 

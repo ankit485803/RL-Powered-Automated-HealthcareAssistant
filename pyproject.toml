@@ -1,0 +1,54 @@
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rl-powered-healthcare-assistant"
+version = "1.0.0"
+description = "OpenEnv Healthcare Triage Environment for RL agents"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Ankit Kumar", email = "ankit@example.com" },
+    { name = "Shubham Kumar", email = "shubham@example.com" },
+    { name = "Ritu Ranjan", email = "ritu@example.com" }
+]
+keywords = ["openenv", "reinforcement-learning", "healthcare", "triage"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "pydantic>=2.5.0",
+    "openai>=1.6.0",
+    "torch>=2.0.0",
+    "numpy>=1.24.0",
+    "pyyaml>=6.0",
+    "httpx>=0.25.0",
+    "openenv-core>=0.2.0",
+]
+
+[project.scripts]
+server = "server.app:main"
+
+[project.urls]
+"Homepage" = "https://github.com/ankit485803/RL-Powered-Automated-HealthcareAssistant"
+"Bug Reports" = "https://github.com/ankit485803/RL-Powered-Automated-HealthcareAssistant/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["environment", "agent", "llm", "server"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]

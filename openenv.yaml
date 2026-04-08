@@ -1,6 +1,5 @@
 
-
-name: RL-Powered-Automated-HealthcareAssistant
+name: rl-powered-healthcare-assistant
 version: 1.0.0
 description: Healthcare triage environment where agents learn to escalate emergencies or generate responses
 
@@ -24,15 +23,6 @@ tasks:
     description: Generate appropriate medical response or escalate to professional
 
 reward_range: [0.0, 1.0]
-observation_space:
-  query: string
-  context: string
-  step_count: integer
-  
-action_space:
-  decision: [ESCALATE, ANSWER]
-  response: string (optional)
-
 tags:
   - healthcare
   - triage
