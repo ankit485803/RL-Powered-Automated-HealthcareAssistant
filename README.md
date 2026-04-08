@@ -1,12 +1,71 @@
-# RL-Powered Automated Healthcare Assistant
+
+# RL-Powered Automated Healthcare Assistant  
+**Team Vector**  
+- Shubham Kumar  
+- Ankit Kumar (Lead)  
+- Ritu Ranjan  
+
+---
 
 ## Abstract
-(Write 150 words: problem, approach, MDP formulation, key reward components)
+Healthcare triage systems face a critical gap: rule-based algorithms fail on nuanced cases, while LLMs lack safety and escalation discipline. We propose an OpenEnv-compatible Reinforcement Learning environment for clinical triage. The problem is modeled as a Markov Decision Process (MDP) with state (patient query + context), actions (ESCALATE or ANSWER), and a reward function balancing safety, response quality, and efficiency. The system penalizes missed emergencies, discourages false alarms, and rewards high-quality responses. Three difficulty levels are included: emergency detection, severity classification, and full response generation. The environment includes a grader, Docker setup, and baseline inference pipeline for reproducible evaluation.
+
+---
 
 ## 1. Introduction
-- Healthcare triage gap
-- Why RL over rule-based systems
-- OpenEnv as framework
+
+### Healthcare Triage Gap
+Healthcare systems handle massive volumes of patient queries daily. Identifying true emergencies among them is critical.  
+- Missed emergencies → high risk  
+- Over-escalation → resource wastage  
+
+---
+
+### Why Reinforcement Learning?
+- Rule-based systems → rigid and brittle  
+- LLMs → flexible but unsafe  
+- RL → learns optimal decisions via feedback  
+
+RL enables:
+- Adaptive learning from interactions  
+- Better safety–efficiency trade-offs  
+- Continuous improvement over time  
+
+---
+
+### OpenEnv Framework
+We use OpenEnv to build a standardized RL environment:
+- `reset()` → initialize state  
+- `step(action)` → transition + reward  
+- `state()` → current observation  
+
+Supports:
+- Reproducible evaluation  
+- Containerized deployment (Docker)  
+- Integration with Hugging Face Spaces  
+
+---
+
+## 1.1 Problem Statement
+The task is sequential decision-making under uncertainty.
+
+Given:
+- Patient query  
+- Limited clinical context  
+
+Agent must decide:
+- **ESCALATE** → refer to human expert  
+- **ANSWER** → generate safe response  
+
+## 1.2 Objectives
+- **Patient Safety** → avoid missed emergencies  
+- **Resource Efficiency** → reduce false escalations  
+- **Response Quality** → ensure accurate guidance  
+
+The environment provides:
+- Dense reward signals  
+- Multi-level difficulty tasks  
+- Standardized evaluation setup  
 
 ## 2. Environment Design
 ### 2.1 MDP Formulation
@@ -35,12 +94,31 @@
 - Action: ESCALATE or ANSWER with LLM response
 - Multi-component reward
 
-## 4. Reward Function
-R = w1 × Safety + w2 × Quality + w3 × Efficiency
 
-Safety = +10 if correct escalate, -20 if missed emergency
-Quality = LLM-as-judge score (0-5)
-Efficiency = -0.1 per step
+## 4. Reward Function
+
+The reward function is defined as:
+
+**R = w₁ × Safety + w₂ × Quality + w₃ × Efficiency**
+
+### Components
+
+- **Safety**
+  - 1.0 → Correct escalation  
+  - 0.0 → Missed emergency  
+  - 0.2 → False escalation  
+
+- **Quality**
+  - Normalized LLM-based score ∈ [0.3, 1.0]  
+  - Reflects accuracy, safety, and completeness  
+
+- **Efficiency**
+  - Time penalty ≤ 0.3  
+  - Encourages faster responses  
+
+### Note
+The final reward is normalized to the range **[0.0, 1.0]** to ensure compatibility with OpenEnv.
+
 
 ## 5. Server API
 | Endpoint | Method | Description |
@@ -88,9 +166,9 @@ metaHFpytorch_openEnvHackathon/
 │
 ├── server.py                 # FastAPI endpoints
 ├── requirements.txt          # Dependencies
-├── inference.py                 # inerfernce file
-├── openenv.py          # openEnv 
-├── .gitignore                # Exclusions
+├── inference.py              # prediction logic file  
+├── openenv.py                # env setup 
+├── .gitignore                # Exclusions ignored files  
 └── README.md                 # Documentation
 
 ```
