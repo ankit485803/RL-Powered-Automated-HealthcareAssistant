@@ -2,7 +2,21 @@
 
 """
 Reward Function 
-Responsible: Ritu Ranjan
+Responsible: Ritu 
+
+Update reward.py - Return 0.0-1.0 Range
+Quick sanity check
+
+| Scenario                | Reward |
+| ----------------------- | ------ |
+| Correct ESCALATE        | 1.0    |
+| Missed emergency        | 0.0    |
+| False alarm             | 0.2    |
+| Good ANSWER (quality=5) | 1.0    |
+| Poor ANSWER (quality=0) | 0.3    |
+
+
+
 """
 
 from typing import Dict, Any
@@ -15,14 +29,14 @@ def calculate_reward(
     response_time_ms: float = 0.0
 ) -> float:
     """
-    Calculate hierarchical reward for healthcare triage action
+    Calculate normalized reward for healthcare triage action
     
-    Reward Structure:
-    - Correct ESCALATE: +10
-    - Missed emergency (ANSWER when should ESCALATE): -20
-    - False alarm (ESCALATE when should not): -5
-    - Correct ANSWER with quality: +1 to +5
-    - Time penalty: -0.1 per second
+    Reward Structure (0.0 - 1.0):
+    - Correct ESCALATE: 1.0
+    - Missed emergency: 0.0
+    - False alarm: 0.2
+    - Correct ANSWER: 0.3 to 1.0 (based on quality)
+    - Time penalty reduces reward
     
     Args:
         action: {"decision": str, "response": str}
@@ -31,7 +45,7 @@ def calculate_reward(
         response_time_ms: Time taken to respond
     
     Returns:
-        Total reward (float)
+        Total reward (float in range 0.0 to 1.0)
     """
     
     decision = action.get("decision", "").upper()
@@ -41,28 +55,27 @@ def calculate_reward(
     if decision == "ESCALATE":
         if requires_escalation:
             # Correct escalation
-            reward = 10.0
+            reward = 1.0
         else:
             # False alarm
-            reward = -5.0
+            reward = 0.2
     
     # Case 2: Agent ANSWERS
     elif decision == "ANSWER":
         if requires_escalation:
-            # Missed emergency - severe penalty
-            reward = -20.0
+            # Missed emergency - worst case
+            reward = 0.0
         else:
-            # Correct answer, reward based on quality
-            # Quality score expected from LLM-as-judge (0-5)
-            reward = response_quality  # Will be between 0 and 5
+            # Correct answer, reward based on quality (0-5 → 0.3-1.0)
+            reward = 0.3 + (response_quality / 5.0) * 0.7
     
     else:
         # Invalid decision
-        reward = -10.0
+        reward = 0.0
     
-    # Apply time penalty (0.1 per second, max -2)
-    time_penalty = min(response_time_ms / 1000 * 0.1, 2.0)
-    reward -= time_penalty
+    # Apply time penalty (0.05 per second, max 0.3)
+    time_penalty = min(response_time_ms / 1000 * 0.05, 0.3)
+    reward = max(0.0, reward - time_penalty)
     
     return round(reward, 2)
 
@@ -84,7 +97,7 @@ def evaluate_response_quality(
     Returns:
         Quality score (0-5)
     """
-    # TODO: Ritu - Implement with Gemini LLM-as-judge
+    # TODO: Ritu 
     # Consider: accuracy, safety, completeness, clarity
     
     # Placeholder

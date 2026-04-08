@@ -1,0 +1,39 @@
+
+
+name: RL-Powered-Automated-HealthcareAssistant
+version: 1.0.0
+description: Healthcare triage environment where agents learn to escalate emergencies or generate responses
+
+tasks:
+  - id: emergency_detection
+    name: Emergency Detection
+    difficulty: easy
+    max_steps: 5
+    description: Binary classification - ESCALATE or ANSWER based on emergency severity
+    
+  - id: severity_classification
+    name: Severity Classification
+    difficulty: medium
+    max_steps: 5
+    description: Classify severity as mild/moderate/severe/emergency with partial credit
+    
+  - id: full_response
+    name: Full Response Generation
+    difficulty: hard
+    max_steps: 8
+    description: Generate appropriate medical response or escalate to professional
+
+reward_range: [0.0, 1.0]
+observation_space:
+  query: string
+  context: string
+  step_count: integer
+  
+action_space:
+  decision: [ESCALATE, ANSWER]
+  response: string (optional)
+
+tags:
+  - healthcare
+  - triage
+  - openenv

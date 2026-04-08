@@ -88,6 +88,8 @@ metaHFpytorch_openEnvHackathon/
 │
 ├── server.py                 # FastAPI endpoints
 ├── requirements.txt          # Dependencies
+├── inference.py                 # inerfernce file
+├── openenv.py          # openEnv 
 ├── .gitignore                # Exclusions
 └── README.md                 # Documentation
 
