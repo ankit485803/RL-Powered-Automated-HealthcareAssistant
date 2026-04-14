@@ -75,7 +75,7 @@ environment/healthcare_env.py          | Shubham      | Skeleton
 environment/reward.py                  | Ritu         | Complete
 agent/rl_agent.py                      | Ankit        | Skeleton
 agent/train.py                         | Ankit        | Skeleton
-llm/gemini_handler.py                  | Shubham      | Skeleton
+llm/openai_handler.py                  | Shubham      | Skeleton
 tests/test_reward.py                   | Ritu         | Complete
 docker/Dockerfile                      | Ankit        | Complete
 server.py                              | Shubham/Ankit| Skeleton

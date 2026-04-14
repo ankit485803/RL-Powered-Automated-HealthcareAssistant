@@ -1,9 +1,47 @@
 
 # RL-Powered Automated Healthcare Assistant  
-**Team Vector**  
+## Team Vector
+
 - Shubham Kumar  
 - Ankit Kumar (Lead)  
 - Ritu Ranjan  
+
+---
+
+## Contributions
+
+### **Ankit (Lead)**
+- End-to-end project development  
+- Designed OpenEnv environment (`healthcare_env.py`)  
+- Built RL agent (`rl_agent.py`, `train.py`)  
+- Developed FastAPI backend (`server/app.py`)  
+- Integrated OpenAI handler (`llm/openai_handler.py`)  
+- Created inference pipeline (`inference.py`)  
+- Managed Docker deployment and Hugging Face Space integration  
+- Completed documentation and final submission  
+
+### **Shubham**
+- Initial collaboration on backend components  
+- Contributed to `server.py` and `openai_handler.py`  
+- Unable to continue due to commitments at Humantics  
+
+### **Ritu**
+- Provided conceptual guidance on patient case design  
+- Assisted in reward logic understanding (`reward.py`, `test_reward.py`)  
+- Offered continuous moral and motivational support  
+
+---
+## Acknowledgments
+
+This project was completed as a **solo effort** by Ankit.  
+
+Shubham (Humantics) and Ritu Ranjan were unable to contribute extensively beyond the initial phase, but their support and encouragement played an important role throughout the project.  
+
+This work reflects individual execution backed by a strong team spirit.  
+
+**Project Demo Video:**  
+👉 https://youtu.be/JWEwRrTlyEk
+
 
 ---
 
